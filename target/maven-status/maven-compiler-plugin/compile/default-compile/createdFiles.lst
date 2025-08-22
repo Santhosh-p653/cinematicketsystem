@@ -1,0 +1,5 @@
+com\moviebooking\controller\MovieController.class
+com\moviebooking\Application.class
+com\moviebooking\repository\MovieRepository.class
+com\moviebooking\model\Movie.class
+com\moviebooking\service\MovieService.class
