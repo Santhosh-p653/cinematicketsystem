@@ -20,17 +20,18 @@ public class BookingController {
         this.bookingService = bookingService;
     }
     
-    @PostMapping
-    public ResponseEntity<Booking> createBooking(@RequestBody Booking booking) {
-        try {
-            Booking createdBooking = bookingService.createBooking(booking);
-            return ResponseEntity.ok(createdBooking);
-        } catch (IllegalStateException e) {
-            return ResponseEntity.badRequest().body(null);
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().body(null);
-        }
+    
+    @PostMapping("/bookings")
+public ResponseEntity<Booking> createBooking(@RequestBody Booking booking) {
+    try {
+        Booking createdBooking = bookingService.createBooking(booking);
+        return ResponseEntity.ok(createdBooking);
+    } catch (IllegalStateException e) {
+        return ResponseEntity.badRequest().body(null);
+    } catch (Exception e) {
+        return ResponseEntity.internalServerError().body(null);
     }
+}
     
     @GetMapping
     public ResponseEntity<List<Booking>> getAllBookings() {
@@ -66,50 +67,41 @@ public class BookingController {
         return ResponseEntity.ok(bookingService.getBookingsByDate(date));
     }
     
-    @GetMapping("/availability")
-    public ResponseEntity<Integer> getAvailableSeats(
-            @RequestParam Long movieId,
-            @RequestParam LocalDate date,
-            @RequestParam LocalTime showTime) {
-        try {
-            Integer availableSeats = bookingService.getAvailableSeatsForShow(movieId, date, showTime);
-            return ResponseEntity.ok(availableSeats);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(-1);
-        }
+    // Get available seats
+@GetMapping("/available-seats")
+public ResponseEntity<Integer> getAvailableSeats(
+        @RequestParam Long movieId,
+        @RequestParam LocalDate date,
+        @RequestParam LocalTime showTime) {
+    try {
+        Integer availableSeats = bookingService.getAvailableSeatsForShow(movieId, date, showTime);
+        return ResponseEntity.ok(availableSeats);
+    } catch (Exception e) {
+        return ResponseEntity.badRequest().body(-1);
     }
-    
-    @PostMapping("/{id}/cancel")
-    public ResponseEntity<Booking> cancelBooking(@PathVariable Long id) {
-        try {
-            Booking cancelledBooking = bookingService.cancelBooking(id);
-            return ResponseEntity.ok(cancelledBooking);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        } catch (IllegalStateException e) {
-            return ResponseEntity.badRequest().body(null);
-        }
+}
+
+// Cancel a booking
+@PostMapping("/{id}/cancel")
+public ResponseEntity<Booking> cancelBooking(@PathVariable Long id) {
+    try {
+        Booking cancelledBooking = bookingService.cancelBooking(id);
+        return ResponseEntity.ok(cancelledBooking);
+    } catch (IllegalStateException e) {  // specific first
+        return ResponseEntity.badRequest().body(null);
+    } catch (RuntimeException e) {       // general last
+        return ResponseEntity.notFound().build();
     }
-    
+}
     @PostMapping("/booking-id/{bookingId}/cancel")
-    public ResponseEntity<Booking> cancelBookingByBookingId(@PathVariable String bookingId) {
-        try {
-            Booking cancelledBooking = bookingService.cancelBookingByBookingId(bookingId);
-            return ResponseEntity.ok(cancelledBooking);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        } catch (IllegalStateException e) {
-            return ResponseEntity.badRequest().body(null);
-        }
+public ResponseEntity<Booking> cancelBookingByBookingId(@PathVariable String bookingId) {
+    try {
+        Booking cancelledBooking = bookingService.cancelBookingByBookingId(bookingId);
+        return ResponseEntity.ok(cancelledBooking);
+    } catch (IllegalStateException e) {  // specific first
+        return ResponseEntity.badRequest().body(null);
+    } catch (RuntimeException e) {       // general last
+        return ResponseEntity.notFound().build();
     }
-    
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBooking(@PathVariable Long id) {
-        try {
-            bookingService.deleteBooking(id);
-            return ResponseEntity.ok().build();
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
+}
 }

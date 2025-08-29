@@ -164,8 +164,4 @@ public class Booking {
     }
 }
 
-enum BookingStatus {
-    CONFIRMED,
-    CANCELLED,
-    COMPLETED
-}
+
