@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Booking</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+8<header>
+  <h1>CineMagic</h1> <!-- Or Cinema Booking, pick one -->
+  <nav>
+    <button onclick="navigateTo('index.html')">Home</button>
+    <button onclick="navigateTo('booking.html')">Book Movie</button>
+    <button onclick="showCancelled()">Cancelled</button>
+    <button onclick="logout()">Logout</button>
+  </nav>
+</header>
+
+  <main id="mainContent">
+    <!-- Booking section -->
+    <section id="bookingSection">
+      <h2>Available Movies</h2>
+      <div id="movies-container" class="cards-container"></div>
+
+      <h3>Book a Movie</h3>
+      <form id="bookingForm">
+        <label>Movie:</label>
+        <select id="movieSelect" required></select>
+
+        <label>Date:</label>
+        <input type="date" id="date" required>
+
+        <label>Show Time:</label>
+        <input type="time" id="showTime" required>
+
+        <label>Seats:</label>
+        <input type="number" id="seats" min="1" max="10" value="1" required>
+
+        <button type="submit">Book Now</button>
+      </form>
+    </section>
+
+    <!-- Cancel section -->
+    <section id="cancelSection" style="display:none;">
+      <h2>Your Bookings</h2>
+      <div id="bookings-container" class="cards-container"></div>
+    </section>
+  </main>
+
+  <script src="booking.js"></script>
+</body>
+</html>
