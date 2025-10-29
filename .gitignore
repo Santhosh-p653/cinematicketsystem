@@ -2,7 +2,7 @@
 /target/
 
 # Ignore jar files
-*.jar
+
 
 # Ignore IDE-specific files (optional)
 /*.iml

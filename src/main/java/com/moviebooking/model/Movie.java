@@ -1,6 +1,6 @@
 package com.moviebooking.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalTime;
 import java.util.List;
 
